@@ -15,10 +15,10 @@ root = tk.Tk()
 class Application(tk.Frame):
     # GLOBAL PARAMETERS
     MATRIZ = []
-    h=[]
-    nos=[]
-    grafo =[]
-    inicio=0
+    h = []
+    nos = []
+    grafo = []
+    inicio = 0
 
     entry_width = None
     entry_height = None
@@ -35,12 +35,11 @@ class Application(tk.Frame):
     ga3 = 0
 
     sf = 0
-    vf=0
+    vf = 0
 
-    matriz=0
-    si=0
-    vi=0
-
+    matriz = 0
+    si = 0
+    vi = 0
 
     def __init__(self, master=None):
         # Container to shelter container_width and container_height
@@ -58,7 +57,7 @@ class Application(tk.Frame):
 
         self.entry_width = tk.Entry(container_width)
         self.entry_width.pack(side=tk.RIGHT)
-        entry.change_text_by_entry(self.entry_width,"3")
+        entry.change_text_by_entry(self.entry_width, "3")
 
         # Height
         container_height = tk.Frame(
@@ -70,7 +69,7 @@ class Application(tk.Frame):
 
         self.entry_height = tk.Entry(container_height)
         self.entry_height.pack(side=tk.RIGHT)
-        entry.change_text_by_entry(self.entry_height,"3")
+        entry.change_text_by_entry(self.entry_height, "3")
 
         container_maze = tk.Frame(master, borderwidth=2, relief="groove")
         # Button Make Maze
@@ -103,24 +102,22 @@ class Application(tk.Frame):
 
         self.n = int(self.entry_height.get())
         # GERA PROBLEMA - MATRIZ DE ADJACÊNCIAS
-        self.matriz = main.gera_Ambiente(self.minimo,self.maximo,self.n)
+        self.matriz = main.gera_Ambiente(self.minimo, self.maximo, self.n)
 
         # GERA SOLUÇÃO INICIAL ALEATÓRIA
         self.si = main.solucao_Inicial(self.n)
 
         # AVALIA SOLUÇÃO INICIAL
-        self.vi = main.avalia_Solucao(self.si,self.matriz,self.n)
+        self.vi = main.avalia_Solucao(self.si, self.matriz, self.n)
 
         self.reset_maze_container(self.matriz, container)
 
-        #Clean old results
-        self.ga1=0
-        self.ga2=0
-        self.ga3=0 
-        #Clean text report
-        entry.change_text_by_entry(self.text_report,self.update_report_text()) 
-
-
+        # Clean old results
+        self.ga1 = 0
+        self.ga2 = 0
+        self.ga3 = 0
+        # Clean text report
+        entry.change_text_by_entry(self.text_report, self.update_report_text())
 
     def reset_maze_container(self, matriz, container):
         # Limpa o container container_maze se já houver widgets
@@ -131,31 +128,30 @@ class Application(tk.Frame):
 
     def activate_subida_enconsta(self, container):
         # EXECUTA - SUBIDA DE ENCOSTA
-        self.sf, self.vf = main.encosta(self.si,self.vi,self.matriz,self.n)
+        self.sf, self.vf = main.encosta(self.si, self.vi, self.matriz, self.n)
         self.ga1 += (self.vi - self.vf)/self.vi
-        print("Ganho - Subida de Encosta....: ",100*self.ga1/self.qt)
-        entry.change_text_by_entry(self.text_report,self.update_report_text())
-
+        print("Ganho - Subida de Encosta....: ", 100*self.ga1/self.qt)
+        entry.change_text_by_entry(self.text_report, self.update_report_text())
 
     def activate_subida_encosta_a(self, container):
         # EXECUTA - SUBIDA DE ENCOSTA ALTERADA
         self.tmax = self.n-1
-        self.sf, vf = main.encosta_alt(self.si,self.vi,self.matriz,self.n,self.tmax)
+        self.sf, vf = main.encosta_alt(
+            self.si, self.vi, self.matriz, self.n, self.tmax)
         self.ga2 += (self.vi - vf)/self.vi
-        print("Ganho - Subida de Encosta_A..: ",100*self.ga2/self.qt)
-        entry.change_text_by_entry(self.text_report,self.update_report_text())
-
+        print("Ganho - Subida de Encosta_A..: ", 100*self.ga2/self.qt)
+        entry.change_text_by_entry(self.text_report, self.update_report_text())
 
     def activate_tempera_simulada(self, container):
         # EXECUTA - TEMPERA SIMULADA
-        self.t_ini  = 800
-        self.t_fim  = 0.01
+        self.t_ini = 800
+        self.t_fim = 0.01
         self.ft_red = 0.95
-        self.sf, self.vf = main.tempera(self.si,self.vi,self.matriz,self.t_ini,self.t_fim,self.ft_red)
+        self.sf, self.vf = main.tempera(
+            self.si, self.vi, self.matriz, self.t_ini, self.t_fim, self.ft_red)
         self.ga3 += (self.vi - self.vf)/self.vi
-        print("Ganho - Têmpera Simulada.....: ",100*self.ga3/self.qt)
-        entry.change_text_by_entry(self.text_report,self.update_report_text())
-
+        print("Ganho - Têmpera Simulada.....: ", 100*self.ga3/self.qt)
+        entry.change_text_by_entry(self.text_report, self.update_report_text())
 
     def clean_maze_container(self, container):
         # Itere sobre os widgets no container e destrua-os
@@ -163,10 +159,14 @@ class Application(tk.Frame):
             widget.destroy()
 
     def update_report_text(self):
-        output="Ganho - Subida de Encosta....: "+"{:.1%}".format((100*self.ga1/self.qt))
-        output+="\n"+"Ganho - Subida de Encosta_A..: "+"{:.1%}".format((100*self.ga2/self.qt))
-        output+="\n"+"Ganho - Têmpera Simulada.....: "+"{:.1%}".format((100*self.ga3/self.qt))
+        output = "Ganho - Subida de Encosta....: " + \
+            "{:.1%}".format((100*self.ga1/self.qt))
+        output += "\n"+"Ganho - Subida de Encosta_A..: " + \
+            "{:.1%}".format((100*self.ga2/self.qt))
+        output += "\n"+"Ganho - Têmpera Simulada.....: " + \
+            "{:.1%}".format((100*self.ga3/self.qt))
         return output
+
 
 # Altera o posicionamento da tela para o meio do monitor principal
 screen_width = root.winfo_screenwidth()
@@ -177,7 +177,7 @@ root.geometry("{}x{}+{}+{}".format(window_width,
               window_height, x_cordinate, y_cordinate))
 
 Application(root)
-root.title("Labirinto IA - 2")
+root.title("Labirinto IA - 3")
 # Impede o redimensionamento horizontal e vertical
 # root.resizable(False, False)
 root.mainloop()

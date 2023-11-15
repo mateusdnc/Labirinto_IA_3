@@ -1,4 +1,4 @@
-# Labirinto_IA - Projeto 2
+# Labirinto_IA - Projeto 3
 
 ### Usage
 run `interface.py`
@@ -7,10 +7,9 @@ run `interface.py`
 Projeto desenvolvido nas aulas de IA para testar algoritimos em um grid com pesos criado dinamicamente.
 
 Algoritimos suportados:
-- Custo Uniforme
-- Greedy
-- A*
-- AIA*
+- Subida de Encosta
+- Subida de Encosta A
+- Têmpera Simulada
 
 ### Dependencies
 - Tkinter
