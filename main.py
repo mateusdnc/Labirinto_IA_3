@@ -86,7 +86,7 @@ def encosta(si,vi,matriz,n):
             return atual, va
 
 # ROTINA SUBIDA DE ENCOSTA ALTERADA
-def encosta_alt(s,v,matriz,n,tmax):
+def encosta_alt(si,vi,matriz,n,tmax):
     atual = cp.deepcopy(si)
     va = vi
     t = 1
@@ -128,8 +128,8 @@ def tempera(si,vi,matriz,ti,tf,fr):
 # ---------------------------------
 # MÓDULO PRINCIPAL
 # ---------------------------------
-
 # CONFIGURAÇÃO DO PROBLEMA
+"""
 n      = 6
 minimo = 20
 maximo = 50
@@ -167,3 +167,4 @@ for i in range(qt):
 print("Ganho - Subida de Encosta....: ",100*ga1/qt)
 print("Ganho - Subida de Encosta_A..: ",100*ga2/qt)
 print("Ganho - Têmpera Simulada.....: ",100*ga3/qt)
+"""

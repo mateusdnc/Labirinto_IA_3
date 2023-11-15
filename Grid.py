@@ -45,13 +45,11 @@ def paint_outline(matriz, container):
 
 def paint_maze(matriz, container):
     rowCount = 0
-    idCont = 0
     for row in matriz:
         colCount = 0
         for char in row:
             entry.change_entry_text(
-                container, rowCount+1, colCount+1, str(idCont)+" - "+str(char))
-            idCont = idCont+1
+                container, rowCount+1, colCount+1, str(char))
             colCount = colCount+1
         rowCount = rowCount+1
 
