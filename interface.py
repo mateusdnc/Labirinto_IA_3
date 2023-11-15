@@ -23,7 +23,7 @@ class Application(tk.Frame):
     entry_width = None
     entry_height = None
 
-    n = 35
+    n = 0
     minimo = 20
     maximo = 50
 
@@ -37,14 +37,9 @@ class Application(tk.Frame):
     sf = 0
     vf=0
 
-    # GERA PROBLEMA - MATRIZ DE ADJACÊNCIAS
-    matriz = main.gera_Ambiente(minimo,maximo,n)
-
-    # GERA SOLUÇÃO INICIAL ALEATÓRIA
-    si = main.solucao_Inicial(n)
-
-    # AVALIA SOLUÇÃO INICIAL
-    vi = main.avalia_Solucao(si,matriz,n)
+    matriz=0
+    si=0
+    vi=0
 
 
     def __init__(self, master=None):
@@ -105,10 +100,18 @@ class Application(tk.Frame):
         self.text_report.pack(side=tk.TOP)
 
     def generate_maze(self, container):
-        # Obtem matriz com cordenadas do grid
-        self.MATRIZ = Grid.make_maze(
-            int(self.entry_height.get()), int(self.entry_width.get()))
-        self.reset_maze_container(self.MATRIZ, container)
+
+        self.n = int(self.entry_height.get())
+        # GERA PROBLEMA - MATRIZ DE ADJACÊNCIAS
+        self.matriz = main.gera_Ambiente(self.minimo,self.maximo,self.n)
+
+        # GERA SOLUÇÃO INICIAL ALEATÓRIA
+        self.si = main.solucao_Inicial(self.n)
+
+        # AVALIA SOLUÇÃO INICIAL
+        self.vi = main.avalia_Solucao(self.si,self.matriz,self.n)
+
+        self.reset_maze_container(self.matriz, container)
 
         #Clean old results
         self.ga1=0
@@ -127,8 +130,6 @@ class Application(tk.Frame):
         Grid.paint_outline(matriz, container)
 
     def activate_subida_enconsta(self, container):
-        self.n = (int(self.entry_height.get())*2) * (int(self.entry_height.get())*2) +1
-
         # EXECUTA - SUBIDA DE ENCOSTA
         self.sf, self.vf = main.encosta(self.si,self.vi,self.matriz,self.n)
         self.ga1 += (self.vi - self.vf)/self.vi
@@ -137,8 +138,6 @@ class Application(tk.Frame):
 
 
     def activate_subida_encosta_a(self, container):
-        self.n = (int(self.entry_height.get())*2) * (int(self.entry_height.get())*2) +1
-
         # EXECUTA - SUBIDA DE ENCOSTA ALTERADA
         self.tmax = self.n-1
         self.sf, vf = main.encosta_alt(self.si,self.vi,self.matriz,self.n,self.tmax)
