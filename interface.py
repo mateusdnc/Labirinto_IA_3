@@ -92,6 +92,11 @@ class Application(tk.Frame):
             text="Tempera Simulada", command=lambda: self.activate_tempera_simulada(container_maze))
         button_find_path_limitada.pack()
 
+        # Executa todos os algoritimos
+        button_find_path_limitada = tk.Button(
+            text="Executa todos", command=lambda: self.activate_executa_todos(container_maze))
+        button_find_path_limitada.pack()
+
         container_maze.pack(fill=tk.X, pady=10, padx=5)
 
         self.text_report = tk.Label(
@@ -152,6 +157,14 @@ class Application(tk.Frame):
         self.ga3 += (self.vi - self.vf)/self.vi
         print("Ganho - Têmpera Simulada.....: ", 100*self.ga3/self.qt)
         entry.change_text_by_entry(self.text_report, self.update_report_text())
+
+    def activate_executa_todos(self, container):
+        # EXECUTA - SUBIDA DE ENCOSTA
+        self.activate_subida_enconsta(container)
+        # EXECUTA - SUBIDA DE ENCOSTA ALTERADA
+        self.activate_subida_encosta_a(container)
+        # EXECUTA - TEMPERA SIMULADA
+        self.activate_tempera_simulada(container)
 
     def clean_maze_container(self, container):
         # Itere sobre os widgets no container e destrua-os
