@@ -79,17 +79,17 @@ class Application(tk.Frame):
 
         # Subida de Encosta
         button_find_path_amplitude = tk.Button(
-            text="Subida de Encosta", command=lambda: self.activate_subida_enconsta(container_maze))
+            text="Subida de Encosta", command=lambda: self.activate_subida_enconsta(container_maze,showPath=True))
         button_find_path_amplitude.pack()
 
         # Subida de Encosta Alterada
         button_find_path_profundidade = tk.Button(
-            text="Subida de Encosta Alterada", command=lambda: self.activate_subida_encosta_a(container_maze))
+            text="Subida de Encosta Alterada", command=lambda: self.activate_subida_encosta_a(container_maze,showPath=True))
         button_find_path_profundidade.pack()
 
         # Tempera Simulada
         button_find_path_limitada = tk.Button(
-            text="Tempera Simulada", command=lambda: self.activate_tempera_simulada(container_maze))
+            text="Tempera Simulada", command=lambda: self.activate_tempera_simulada(container_maze,showPath=True))
         button_find_path_limitada.pack()
 
         # Executa todos os algoritimos
@@ -98,6 +98,10 @@ class Application(tk.Frame):
         button_find_path_limitada.pack()
 
         container_maze.pack(fill=tk.X, pady=10, padx=5)
+
+        self.text_path = tk.Label(
+            master, text="",)
+        self.text_path.pack(side=tk.TOP)
 
         self.text_report = tk.Label(
             master, text="",)
@@ -131,14 +135,16 @@ class Application(tk.Frame):
         Grid.paint_maze(matriz, container)
         Grid.paint_outline(matriz, container)
 
-    def activate_subida_enconsta(self, container):
+    def activate_subida_enconsta(self, container, showPath):
         # EXECUTA - SUBIDA DE ENCOSTA
         self.sf, self.vf = main.encosta(self.si, self.vi, self.matriz, self.n)
         self.ga1 += (self.vi - self.vf)/self.vi
         print("Ganho - Subida de Encosta....: ", 100*self.ga1/self.qt)
         entry.change_text_by_entry(self.text_report, self.update_report_text())
+        if(showPath):
+            entry.change_text_by_entry(self.text_path, "Caminho Subida de Encosta: "+str(self.sf))
 
-    def activate_subida_encosta_a(self, container):
+    def activate_subida_encosta_a(self, container, showPath):
         # EXECUTA - SUBIDA DE ENCOSTA ALTERADA
         self.tmax = self.n-1
         self.sf, vf = main.encosta_alt(
@@ -146,8 +152,11 @@ class Application(tk.Frame):
         self.ga2 += (self.vi - vf)/self.vi
         print("Ganho - Subida de Encosta_A..: ", 100*self.ga2/self.qt)
         entry.change_text_by_entry(self.text_report, self.update_report_text())
+        if(showPath):
+            entry.change_text_by_entry(self.text_path, "Caminho Subida de Encosta_A: "+str(self.sf))
 
-    def activate_tempera_simulada(self, container):
+
+    def activate_tempera_simulada(self, container, showPath):
         # EXECUTA - TEMPERA SIMULADA
         self.t_ini = 800
         self.t_fim = 0.01
@@ -157,14 +166,21 @@ class Application(tk.Frame):
         self.ga3 += (self.vi - self.vf)/self.vi
         print("Ganho - Têmpera Simulada.....: ", 100*self.ga3/self.qt)
         entry.change_text_by_entry(self.text_report, self.update_report_text())
+        if(showPath):
+            entry.change_text_by_entry(self.text_path, "Caminho Têmpera Simulada: "+str(self.sf))
+
 
     def activate_executa_todos(self, container):
         # EXECUTA - SUBIDA DE ENCOSTA
-        self.activate_subida_enconsta(container)
+        self.activate_subida_enconsta(container,showPath=False)
         # EXECUTA - SUBIDA DE ENCOSTA ALTERADA
-        self.activate_subida_encosta_a(container)
+        self.activate_subida_encosta_a(container,showPath=False)
         # EXECUTA - TEMPERA SIMULADA
-        self.activate_tempera_simulada(container)
+        self.activate_tempera_simulada(container,showPath=False)
+
+        # CLEAN TEXT PATH
+        entry.change_text_by_entry(self.text_path, "")
+
 
     def clean_maze_container(self, container):
         # Itere sobre os widgets no container e destrua-os
