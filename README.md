@@ -8,7 +8,7 @@ Projeto desenvolvido nas aulas de IA para testar algoritimos em um grid com peso
 
 Algoritimos suportados:
 - Subida de Encosta
-- Subida de Encosta A
+- Subida de Encosta Alterada (A)
 - Têmpera Simulada
 
 ### Dependencies

@@ -1,10 +1,9 @@
-Projeto Labirinto IA - 2
+Projeto Labirinto IA - 3
 
 Passos para executar o programa:
 
-1. Inserir a altura(height) e largura (width) da matriz a ser gerada. Obs: valores acima de 5x5 podem causar lentidão
+1. Inserir a altura(height) e largura (width) da matriz a ser gerada. Obs: valores acima de 8x8 podem causar lentidão
 2. Clicar em Make Maze
-3. Inserir as coordenadas da celula alvo para o caminho ser gerado
 4. Selecionar o algoritimo a ser executado.
 
 Alunos:
